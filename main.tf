@@ -1,0 +1,38 @@
+terraform {
+  backend "s3" {
+    bucket         = "tf-state-xking"
+    key            = "dev/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "tf-state-xking-locks"
+    encrypt        = true
+  }
+}
+
+provider "aws" {
+  region = var.region
+}
+
+module "vpc" {
+  source = "./modules/vpc"
+  env = var.env
+}
+
+module "ecs" {
+  source = "./modules/ecs"
+  env = var.env
+  ecs_cluster_name = "Arroyo-Consulting"
+  sg = module.vpc.sg
+  subnet = module.vpc.subnet
+  tg = module.vpc.tg
+  listener = module.vpc.listener
+}
+
+module "rds" {
+  source = "./modules/db"
+  env = var.env
+  subnet = module.vpc.subnet-rds
+  sg = module.vpc.sg-rds
+  rds_name = "acdb-instance"
+  db_name = "acdb"
+  db_user = "testing"
+}
