@@ -111,13 +111,6 @@ resource "aws_security_group" "database-sg" {
     security_groups = [aws_security_group.only_ssh_bastion.id, aws_security_group.web-sg.id]
   }
 
-  ingress {
-    description = "5432 from VPC"
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   egress {
     from_port   = 32768
     to_port     = 65535

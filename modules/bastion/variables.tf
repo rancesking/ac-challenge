@@ -7,13 +7,13 @@ variable "env" {
 variable "instance_type" {
   description = "Set the instance type for the bastion host"
   type        = string
-  default     = "t2.micro"
+  default     = "t4g.nano"
 }
 
 variable "instance_ami" {
   description = "Set the instance OS for the bastion host"
   type        = string
-  default     = "ami-0cff7528ff583bf9a"
+  default     = "ami-0b9ce70cf1bc24fc3"
 }
 
 variable "subnet" {
