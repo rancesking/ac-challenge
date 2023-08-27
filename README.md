@@ -4,6 +4,9 @@
 
 This is a Terraform proyect to deploy a AWS infrastructure with ECS, RDS, VPC, ALB and a Bastion Hosts.
 
+## Container Image
+Docker image:[xkingrd/ac-challenge](https://hub.docker.com/r/xkingrd/ac-challenge).
+
 ## Inputs
 
 | Variable Name | Description | Type | Default | Required |
