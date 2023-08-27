@@ -26,7 +26,7 @@ ENV PASSWORD=changeme
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 # Copy required files to teh docker image
-COPY index.html /var/www/html/index.html
+COPY ./website/index.html /var/www/html/index.html
 
 # Expose port 80 & 8080
 EXPOSE 80
