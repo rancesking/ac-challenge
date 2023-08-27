@@ -104,7 +104,7 @@ resource "aws_security_group" "database-sg" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description     = "Allow traffic from application layer"
+    description     = "Allow traffic from web and bastion layer"
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
