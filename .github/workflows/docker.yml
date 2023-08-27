@@ -24,7 +24,7 @@ jobs:
 
     - name: Build and push Docker image
       env:
-        IMAGE_NAME: AC-challenge
+        IMAGE_NAME: ac-challenge
       run: |
         docker buildx build --progress plain -t $IMAGE_NAME:$GITHUB_SHA -t $IMAGE_NAME:latest .
         docker push $IMAGE_NAME:$GITHUB_SHA
