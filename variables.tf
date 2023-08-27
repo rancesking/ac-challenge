@@ -15,7 +15,7 @@ variable "item_count" {
   description = "default count used to set AZs and instances"
   type        = number
   default     = "2"
-} 
+}
 
 #VPC variables
 variable "vpc_cidr" {
@@ -86,7 +86,7 @@ variable "fargate_memory" {
 
 #Create database variables
 variable "rds_instance" {
-  type    = map(any)
+  type = map(any)
   default = {
     allocated_storage   = 5
     engine              = "postgres"

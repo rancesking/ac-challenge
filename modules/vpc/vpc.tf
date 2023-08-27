@@ -2,7 +2,6 @@
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr
   tags = {
-    Env = var.env
     Name = "Challenge-Arroyo"
   }
 }
@@ -16,7 +15,6 @@ resource "aws_subnet" "web-subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Env  = var.env
     Name = "Web-${count.index + 1}"
   }
 }
@@ -30,7 +28,6 @@ resource "aws_subnet" "database-subnet" {
   map_public_ip_on_launch = false
 
   tags = {
-    Env  = var.env
     Name = "Database-${count.index + 1}"
   }
 }
@@ -40,7 +37,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
   tags = {
-    Env = var.env
+    Name = "AC-Consulting-IGW"
   }
 }
 
@@ -55,7 +52,6 @@ resource "aws_route_table" "web-rt" {
   }
 
   tags = {
-    Env = var.env
     Name = "Web-RT"
   }
 }
@@ -70,17 +66,24 @@ resource "aws_route_table_association" "rt_association" {
 # Create Web Security Group
 resource "aws_security_group" "web-sg" {
   name        = "${var.env}-Web-SG"
-  description = "Allow HTTP inbound traffic"
+  description = "Allow HTTP, 8080 and ssh inbound traffic"
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "HTTP from VPC"
+    description = "HTTP to Instance"
     from_port   = var.lb_port
     to_port     = var.lb_port
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "VS to Instance"
+    from_port   = var.vs_port
+    to_port     = var.vs_port
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     from_port   = 0
@@ -90,7 +93,6 @@ resource "aws_security_group" "web-sg" {
   }
 
   tags = {
-    Env = var.env
   }
 }
 
@@ -124,10 +126,10 @@ resource "aws_security_group" "database-sg" {
   }
 
   tags = {
-    Env = var.env
   }
 }
 
+#Only access from my local IP
 resource "aws_security_group" "only_ssh_bastion" {
   name   = "only_ssh_bastion"
   vpc_id = aws_vpc.main.id
@@ -136,7 +138,7 @@ resource "aws_security_group" "only_ssh_bastion" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["190.167.40.188/32"]
   }
 
   egress {

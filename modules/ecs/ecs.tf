@@ -18,6 +18,11 @@ resource "aws_ecs_task_definition" "main" {
       protocol      = "tcp"
       containerPort = var.lb_port
       hostPort      = var.lb_port
+    },
+    {
+      protocol      = "tcp"
+      containerPort = var.vs_port
+      hostPort      = var.vs_port
     }]
     logConfiguration = {
       logDriver = "awslogs"
@@ -30,7 +35,6 @@ resource "aws_ecs_task_definition" "main" {
   }])
 
   tags = {
-    Environment = var.env
   }
 }
 
@@ -58,6 +62,12 @@ resource "aws_ecs_service" "main" {
     target_group_arn = var.tg
     container_name   = "${var.env}-container"
     container_port   = var.lb_port
+  }
+
+  load_balancer {
+    target_group_arn = var.vs_tg
+    container_name   = "${var.env}-container"
+    container_port   = var.vs_port
   }
 
   depends_on = [var.listener, aws_iam_role_policy_attachment.ecs_task_execution_role]

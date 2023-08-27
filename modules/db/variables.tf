@@ -22,7 +22,7 @@ variable "subnet" {
 }
 
 variable "sg" {
-  description = "security group allowing port 5543 to the RDS instance imported from vpc module"
+  description = "security group allowing port 5432 to the RDS instance imported from vpc module"
 }
 
 variable "rds_name" {

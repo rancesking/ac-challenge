@@ -18,7 +18,6 @@ resource "aws_db_instance" "default" {
   skip_final_snapshot    = var.rds_instance.skip_final_snapshot
   vpc_security_group_ids = [var.sg]
   tags = {
-    Env = var.env
   }
 }
 
@@ -27,6 +26,5 @@ resource "aws_db_subnet_group" "default" {
   subnet_ids = [var.subnet[0], var.subnet[1]]
 
   tags = {
-    Env = var.env
   }
 }

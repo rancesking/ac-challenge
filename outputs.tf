@@ -1,33 +1,25 @@
-# output "lb_dns_name" {
-#   description = "The DNS name of the load balancer"
-#   value       = aws_lb.main.dns_name
-# }
-
-# output "back_dns_name" {
-#   description = "The DNS name of the backend load balancer"
-#   value       = aws_lb.back.dns_name
-# }
-
-# output "DB_endpoint" {
-#   description = "The Endpoint IP of the Postgres RDS"
-#   value       = aws_db_instance.default.endpoint
-# }
-
-# output "Bastion_endpoint" {
-#   description = "The Endpoint IP of the BAstion Hosts"
-#   value       = aws_instance.BASTION.public_ip
-# }
-
+output "alb_endpoint" {
+  description = "Application loadbalance endpoint for the ECS cluster"
+  value       = module.vpc.alb_endpoint
+}
 output "rds_instance_endpoint" {
-  value = module.rds.db_endpoint
+  description = "RDS instance endpoint"
+  value       = module.rds.db_endpoint
 }
 
 output "rds_instance_user" {
-  value = module.rds.db_user
+  description = "RDS username"
+  value       = module.rds.db_user
 }
 
 output "rds_instance_pass" {
-  value = module.rds.db_pass
+  description = "Generated RDS user password"
+  value       = module.rds.db_pass
+}
+
+output "bastion_ip" {
+  description = "Public IP of the bastion host"
+  value       = module.bastion.bastion_ip
 }
 
 

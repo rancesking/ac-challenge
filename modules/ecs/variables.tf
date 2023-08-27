@@ -28,12 +28,17 @@ variable "ecs_task_execution_role_name" {
 
 variable "app_image" {
   description = "Docker image to run in the ECS cluster"
-  default     = "xkingrd/littlelink:v33"
+  default     = "xkingrd/ac-challenge"
 }
 
 variable "lb_port" {
   description = "Port exposed by the docker image to redirect traffic to"
   default     = 80
+}
+
+variable "vs_port" {
+  description = "Port exposed by the docker image to redirect traffic to"
+  default     = 8080
 }
 
 variable "app_port" {
@@ -69,6 +74,10 @@ variable "sg" {
 }
 
 variable "tg" {
+  description = "target group for the ecs cluster imported from vpc module"
+}
+
+variable "vs_tg" {
   description = "target group for the ecs cluster imported from vpc module"
 }
 
